@@ -11,69 +11,173 @@
       max-width: 800px;
       margin: auto;
     }
-    h2 {
+
+    h1, h2 {
       color: #333;
+    }
+
+    h2 {
       border-bottom: 2px solid #ccc;
       padding-bottom: 5px;
     }
+
     ul {
       list-style: none;
       padding-left: 0;
     }
+
     li {
       margin: 10px 0;
     }
+
     a {
       color: #1a73e8;
       text-decoration: none;
       font-weight: bold;
     }
+
     a:hover {
       text-decoration: underline;
+    }
+
+    /* Dropdown language switch */
+    .lang-dropdown {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 20px;
+      float: right;
+    }
+
+    .lang-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      padding: 5px;
+    }
+
+    .lang-btn img {
+      width: 30px;
+      height: 20px;
+      vertical-align: middle;
+    }
+
+    .lang-menu {
+      display: none;
+      position: absolute;
+      right: 0;
+      background-color: white;
+      min-width: 100px;
+      border: 1px solid #ccc;
+      z-index: 1;
+      border-radius: 5px;
+    }
+
+    .lang-menu button {
+      width: 100%;
+      padding: 5px 10px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .lang-menu button img {
+      width: 25px;
+      height: 17px;
+      margin-right: 8px;
+    }
+
+    .lang-menu button:hover {
+      background-color: #f1f1f1;
     }
   </style>
 </head>
 <body>
 
-  <h1>Sites de Vagas Remotas</h1>
+  <!-- Botão de Idiomas -->
+  <div class="lang-dropdown">
+    <button class="lang-btn" onclick="toggleMenu()">
+      <img id="current-flag" src="https://flagcdn.com/w40/br.png" alt="Bandeira atual">
+    </button>
+    <div class="lang-menu" id="langMenu">
+      <button onclick="setLanguage('pt')">
+        <img src="https://flagcdn.com/w40/br.png" alt="Português"> Português
+      </button>
+      <button onclick="setLanguage('en')">
+        <img src="https://flagcdn.com/w40/us.png" alt="English"> English
+      </button>
+    </div>
+  </div>
 
+  <h1 id="main-title">Sites de Vagas Remotas</h1>
   <div id="container"></div>
 
   <script>
+    const flagMap = {
+      pt: "https://flagcdn.com/w40/br.png",
+      en: "https://flagcdn.com/w40/us.png"
+    };
+
+    const translations = {
+      pt: {
+        title: "Sites de Vagas Remotas",
+        sections: {
+          europe: "Na Europa",
+          northAmerica: "Na América do Norte",
+          oceania: "Na Oceania",
+          other: "Outras Regiões",
+          generalFreelance: "Plataformas de Freelancing Generalistas",
+          specializedFreelance: "Plataformas de Freelancing Especializadas"
+        }
+      },
+      en: {
+        title: "Remote Job Websites",
+        sections: {
+          europe: "In Europe",
+          northAmerica: "In North America",
+          oceania: "In Oceania",
+          other: "Other Regions",
+          generalFreelance: "General Freelancing Platforms",
+          specializedFreelance: "Specialized Freelancing Platforms"
+        }
+      }
+    };
+
     const data = {
-      "Na Europa": [
+      europe: [
         ["Eurojobs", "https://eurojobs.com"],
-        ["Jobsite (Reino Unido)", "https://jobsite.co.uk"],
-        ["IrishJobs (Irlanda)", "https://irishjobs.ie"],
-        ["RecruitIreland (Irlanda)", "https://recruitireland.com"],
-        ["Reed (Reino Unido)", "https://reed.co.uk"],
+        ["Jobsite (UK)", "https://jobsite.co.uk"],
+        ["IrishJobs (Ireland)", "https://irishjobs.ie"],
+        ["RecruitIreland (Ireland)", "https://recruitireland.com"],
+        ["Reed (UK)", "https://reed.co.uk"],
         ["Euro Brussels", "https://eurobrussels.com"],
         ["The Local Europe", "https://thelocal.se/jobs"],
-        ["Undutchables (Holanda)", "https://undutchables.nl"]
+        ["Undutchables (Netherlands)", "https://undutchables.nl"]
       ],
-      "Na América do Norte": [
-        ["Job Bank (Canadá)", "https://jobbank.gc.ca/home"]
+      northAmerica: [
+        ["Job Bank (Canada)", "https://jobbank.gc.ca/home"]
       ],
-      "Na Oceania": [
-        ["Careerone (Austrália)", "https://careerone.com.au"],
-        ["SEEK (Nova Zelândia)", "https://seek.co.nz"],
+      oceania: [
+        ["Careerone (Australia)", "https://careerone.com.au"],
+        ["SEEK (New Zealand)", "https://seek.co.nz"],
         ["NZ Farm Source", "https://nzfarmsource.co.nz/jobs"],
-        ["Jora (Austrália)", "https://au.jora.com"],
+        ["Jora (Australia)", "https://au.jora.com"],
         ["Jobbatical", "https://jobbatical.com"]
       ],
-      "Outras Regiões": [
+      other: [
         ["Flex Jobs", "https://flexjobs.com"],
         ["We Work Remotely", "https://weworkremotely.com"],
         ["Remote OK", "https://remoteok.io"],
         ["Work Market", "https://workmarket.com"],
         ["True Lancer", "https://truelancer.com"],
-        ["Careers24 (África do Sul)", "https://careers24.com"],
-        ["Pnet (África do Sul)", "https://pnet.co.za"],
+        ["Careers24 (South Africa)", "https://careers24.com"],
+        ["Pnet (South Africa)", "https://pnet.co.za"],
         ["Job Monkey", "https://jobmonkey.com"],
         ["Anywork Anywhere", "https://anyworkanywhere.com"],
         ["Vagas Pelo Mundo", "https://vagaspelomundo.com.br"]
       ],
-      "Plataformas de Freelancing Generalistas": [
+      generalFreelance: [
         ["Freelancer", "https://freelancer.com"],
         ["Upwork", "https://upwork.com"],
         ["Guru", "https://guru.com"],
@@ -85,39 +189,68 @@
         ["Toptal", "https://toptal.com"],
         ["Fourerr", "https://fourerr.com"]
       ],
-      "Plataformas de Freelancing Especializadas": [
-        ["Proz (Tradução)", "https://proz.com"],
-        ["Gengo (Tradução)", "https://gengo.com/translators"],
-        ["Free Lance Writing (Redação)", "https://freelancewritinggigs.com"],
-        ["Online Writing Jobs (Redação)", "https://onlinewritingjobs.com"],
-        ["Tutor (Tutoria online)", "https://tutor.com"],
-        ["FreelancerMAP (TI)", "https://freelancermap.com"]
+      specializedFreelance: [
+        ["Proz (Translation)", "https://proz.com"],
+        ["Gengo (Translation)", "https://gengo.com/translators"],
+        ["Free Lance Writing (Writing)", "https://freelancewritinggigs.com"],
+        ["Online Writing Jobs (Writing)", "https://onlinewritingjobs.com"],
+        ["Tutor (Tutoring)", "https://tutor.com"],
+        ["FreelancerMAP (IT)", "https://freelancermap.com"]
       ]
     };
 
-    const container = document.getElementById('container');
+    let currentLang = 'pt';
 
-    for (const [category, links] of Object.entries(data)) {
-      const section = document.createElement('section');
-      const title = document.createElement('h2');
-      title.textContent = category;
-      section.appendChild(title);
-
-      const ul = document.createElement('ul');
-      links.forEach(([name, url]) => {
-        const li = document.createElement('li');
-        const a = document.createElement('a');
-        a.href = url;
-        a.target = "_blank";
-        a.rel = "noopener noreferrer";
-        a.textContent = name;
-        li.appendChild(a);
-        ul.appendChild(li);
-      });
-
-      section.appendChild(ul);
-      container.appendChild(section);
+    function toggleMenu() {
+      const menu = document.getElementById('langMenu');
+      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
     }
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      document.getElementById('main-title').textContent = translations[lang].title;
+      document.getElementById('current-flag').src = flagMap[lang];
+      renderSections();
+      document.getElementById('langMenu').style.display = 'none';
+    }
+
+    function renderSections() {
+      const container = document.getElementById('container');
+      container.innerHTML = '';
+
+      for (const [key, links] of Object.entries(data)) {
+        const section = document.createElement('section');
+        const title = document.createElement('h2');
+        title.textContent = translations[currentLang].sections[key];
+        section.appendChild(title);
+
+        const ul = document.createElement('ul');
+        links.forEach(([name, url]) => {
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = url;
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+          a.textContent = name;
+          li.appendChild(a);
+          ul.appendChild(li);
+        });
+
+        section.appendChild(ul);
+        container.appendChild(section);
+      }
+    }
+
+    // Inicializa
+    setLanguage('pt');
+
+    // Fecha dropdown se clicar fora
+    window.onclick = function(event) {
+      const menu = document.getElementById("langMenu");
+      if (!event.target.closest('.lang-dropdown')) {
+        menu.style.display = "none";
+      }
+    };
   </script>
 
 </body>
