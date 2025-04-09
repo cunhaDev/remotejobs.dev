@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Sites de Vagas Remotas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    h2 {
+      color: #333;
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 5px;
+    }
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    li {
+      margin: 10px 0;
+    }
+    a {
+      color: #1a73e8;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Sites de Vagas Remotas</h1>
+
+  <div id="container"></div>
+
+  <script>
+    const data = {
+      "Na Europa": [
+        ["Eurojobs", "https://eurojobs.com"],
+        ["Jobsite (Reino Unido)", "https://jobsite.co.uk"],
+        ["IrishJobs (Irlanda)", "https://irishjobs.ie"],
+        ["RecruitIreland (Irlanda)", "https://recruitireland.com"],
+        ["Reed (Reino Unido)", "https://reed.co.uk"],
+        ["Euro Brussels", "https://eurobrussels.com"],
+        ["The Local Europe", "https://thelocal.se/jobs"],
+        ["Undutchables (Holanda)", "https://undutchables.nl"]
+      ],
+      "Na América do Norte": [
+        ["Job Bank (Canadá)", "https://jobbank.gc.ca/home"]
+      ],
+      "Na Oceania": [
+        ["Careerone (Austrália)", "https://careerone.com.au"],
+        ["SEEK (Nova Zelândia)", "https://seek.co.nz"],
+        ["NZ Farm Source", "https://nzfarmsource.co.nz/jobs"],
+        ["Jora (Austrália)", "https://au.jora.com"],
+        ["Jobbatical", "https://jobbatical.com"]
+      ],
+      "Outras Regiões": [
+        ["Flex Jobs", "https://flexjobs.com"],
+        ["We Work Remotely", "https://weworkremotely.com"],
+        ["Remote OK", "https://remoteok.io"],
+        ["Work Market", "https://workmarket.com"],
+        ["True Lancer", "https://truelancer.com"],
+        ["Careers24 (África do Sul)", "https://careers24.com"],
+        ["Pnet (África do Sul)", "https://pnet.co.za"],
+        ["Job Monkey", "https://jobmonkey.com"],
+        ["Anywork Anywhere", "https://anyworkanywhere.com"],
+        ["Vagas Pelo Mundo", "https://vagaspelomundo.com.br"]
+      ],
+      "Plataformas de Freelancing Generalistas": [
+        ["Freelancer", "https://freelancer.com"],
+        ["Upwork", "https://upwork.com"],
+        ["Guru", "https://guru.com"],
+        ["PeoplePerHour", "https://peopleperhour.com"],
+        ["Workana", "https://workana.com"],
+        ["Fiverr", "https://fiverr.com"],
+        ["Freelanced", "https://freelanced.com"],
+        ["Findeavor", "https://findeavor.com"],
+        ["Toptal", "https://toptal.com"],
+        ["Fourerr", "https://fourerr.com"]
+      ],
+      "Plataformas de Freelancing Especializadas": [
+        ["Proz (Tradução)", "https://proz.com"],
+        ["Gengo (Tradução)", "https://gengo.com/translators"],
+        ["Free Lance Writing (Redação)", "https://freelancewritinggigs.com"],
+        ["Online Writing Jobs (Redação)", "https://onlinewritingjobs.com"],
+        ["Tutor (Tutoria online)", "https://tutor.com"],
+        ["FreelancerMAP (TI)", "https://freelancermap.com"]
+      ]
+    };
+
+    const container = document.getElementById('container');
+
+    for (const [category, links] of Object.entries(data)) {
+      const section = document.createElement('section');
+      const title = document.createElement('h2');
+      title.textContent = category;
+      section.appendChild(title);
+
+      const ul = document.createElement('ul');
+      links.forEach(([name, url]) => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = url;
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        a.textContent = name;
+        li.appendChild(a);
+        ul.appendChild(li);
+      });
+
+      section.appendChild(ul);
+      container.appendChild(section);
+    }
+  </script>
+
+</body>
+</html>
